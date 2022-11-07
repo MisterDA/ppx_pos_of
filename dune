@@ -1,0 +1,32 @@
+(library
+ (public_name ppx_pos_of)
+ (kind ppx_rewriter)
+ (preprocess
+  (pps ppxlib.metaquot))
+ (libraries ppxlib)
+ (modules ppx_pos_of))
+
+(library
+ (public_name ppx_alcotest)
+ (kind ppx_rewriter)
+ (preprocess
+  (pps ppxlib.metaquot))
+ (libraries ppxlib)
+ (modules ppx_alcotest))
+
+(test
+ (name example)
+ (package ppx_pos_of)
+ (preprocess
+  (pps ppx_pos_of))
+ (modules example))
+
+(test
+ (name alcotest)
+ (package ppx_alcotest)
+ (preprocess
+  (pps ppx_pos_of ppx_alcotest ppx_here))
+ (libraries alcotest)
+ (modules alcotest)
+ (action
+  (run %{test} -e)))
